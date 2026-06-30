@@ -590,7 +590,18 @@ section {
 .services .service-item .readmore {
   margin-top: 15px;
   display: inline-block;
+  padding: 8px 22px;
+  border-radius: 8px;
+  border: 2px solid var(--color-primary);
   color: var(--color-primary);
+  font-weight: 600;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.services .service-item .readmore:hover {
+  background: var(--color-primary);
+  color: #fff;
 }
 
 .services .service-item:hover .icon:before {
@@ -604,115 +615,184 @@ section {
 
 
 /*--------------------------------------------------------------
-# Projects Section
+# Projects Section - horizontal scrollable galleries
 --------------------------------------------------------------*/
-.projects .portfolio-flters {
-  padding: 0;
-  margin: 0 auto 20px auto;
-  list-style: none;
-  text-align: center;
+.gallery-category {
+  margin-bottom: 45px;
 }
 
-.projects .portfolio-flters li {
-  cursor: pointer;
-  display: inline-block;
-  padding: 0;
+.gallery-category:last-child {
+  margin-bottom: 0;
+}
+
+.gallery-category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.gallery-category-header h3 {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-default);
+  margin: 0;
+  padding-left: 14px;
+  border-left: 4px solid var(--color-primary);
+}
+
+.gallery-nav {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.gallery-arrow {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 18px;
-  font-weight: 500;
-  margin: 0 10px;
-  line-height: 1;
-  margin-bottom: 5px;
-  transition: all 0.3s ease-in-out;
-}
-
-.projects .portfolio-flters li:hover,
-.projects .portfolio-flters li.filter-active {
+  border-radius: 8px;
+  border: 2px solid var(--color-primary);
+  background: #fff;
   color: var(--color-primary);
-}
-
-.projects .portfolio-flters li:first-child {
-  margin-left: 0;
-}
-
-.projects .portfolio-flters li:last-child {
-  margin-right: 0;
-}
-
-@media (max-width: 575px) {
-  .projects .portfolio-flters li {
-    font-size: 14px;
-    margin: 0 5px;
-  }
-}
-
-.projects .portfolio-content {
-  position: relative;
-  overflow: hidden;
-}
-
-.projects .portfolio-content img {
+  cursor: pointer;
   transition: 0.3s;
 }
 
-.projects .portfolio-content .portfolio-info {
-  opacity: 0;
+.gallery-arrow:hover {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.gallery-arrow.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.gallery-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) #e6e6e6;
+  padding-bottom: 10px;
+}
+
+.gallery-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.gallery-scroll::-webkit-scrollbar-track {
+  background: #e6e6e6;
+  border-radius: 10px;
+}
+
+.gallery-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 10px;
+}
+
+.gallery-track {
+  display: flex;
+  gap: 16px;
+}
+
+.gallery-card {
+  position: relative;
+  flex: 0 0 auto;
+  height: 260px;
+  min-width: 150px;
+  max-width: 420px;
+  border-radius: 10px;
+  overflow: hidden;
+  scroll-snap-align: start;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  background: #e9eef1;
+  /* aspect-ratio is set inline per card from the image's real dimensions,
+     so width is calculated automatically and nothing gets oddly cropped */
+}
+
+.gallery-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.gallery-card:hover img {
+  transform: scale(1.08);
+}
+
+.gallery-card-info {
   position: absolute;
   inset: 0;
-  z-index: 3;
-  transition: all ease-in-out 0.3s;
-  background: rgba(0, 0, 0, 0.6);
-  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 14px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.15) 55%, rgba(0, 0, 0, 0) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.projects .portfolio-content .portfolio-info h4 {
-  font-size: 14px;
-  padding: 5px 10px;
-  font-weight: 400;
-  color: #fff;
-  display: inline-block;
-  background-color: var(--color-primary);
-}
-
-.projects .portfolio-content .portfolio-info p {
-  position: absolute;
-  bottom: 10px;
-  text-align: center;
-  display: inline-block;
-  left: 0;
-  right: 0;
-  font-size: 16px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.projects .portfolio-content .portfolio-info .preview-link,
-.projects .portfolio-content .portfolio-info .details-link {
-  position: absolute;
-  left: calc(50% - 40px);
-  font-size: 26px;
-  top: calc(50% - 14px);
-  color: #fff;
-  transition: 0.3s;
-  line-height: 1.2;
-}
-
-.projects .portfolio-content .portfolio-info .preview-link:hover,
-.projects .portfolio-content .portfolio-info .details-link:hover {
-  color: var(--color-primary);
-}
-
-.projects .portfolio-content .portfolio-info .details-link {
-  left: 50%;
-  font-size: 34px;
-  line-height: 0;
-}
-
-.projects .portfolio-content:hover .portfolio-info {
+.gallery-card:hover .gallery-card-info {
   opacity: 1;
 }
 
-.projects .portfolio-content:hover img {
-  transform: scale(1.1);
+.gallery-card-info h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.gallery-card-info p {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  padding-right: 36px;
+}
+
+.gallery-zoom {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+.gallery-zoom:hover {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+@media (max-width: 575px) {
+  .gallery-card {
+    height: 200px;
+    min-width: 120px;
+    max-width: 320px;
+  }
+
+  .gallery-category-header h3 {
+    font-size: 18px;
+  }
 }
 
 
@@ -925,22 +1005,36 @@ section {
   font-size: 18px;
 }
 
-.hero .info .btn-get-started {
+.btn-get-started {
   font-family: var(--font-primary);
-  font-weight: 500;
-  font-size: 16px;
-  letter-spacing: 1px;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: 0.5px;
   display: inline-block;
-  padding: 12px 40px;
-  border-radius: 50px;
-  transition: 0.5s;
+  padding: 12px 36px;
+  border-radius: 8px;
+  transition: 0.3s;
   margin: 10px;
-  color: #fff;
+  color: var(--color-primary);
+  background: transparent;
   border: 2px solid var(--color-primary);
+}
+
+.btn-get-started:hover {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.hero .info .btn-get-started {
+  color: #fff;
+  border-color: #fff;
 }
 
 .hero .info .btn-get-started:hover {
   background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
 }
 
 .hero .carousel-control-prev {
@@ -1106,4 +1200,92 @@ section {
 
 .footer .footer-legal .credits a {
   color: var(--color-primary);
+}
+
+/*--------------------------------------------------------------
+# Uređaj protiv kamenca Section
+--------------------------------------------------------------*/
+.uredjaj-protiv-kamenca {
+  padding: 70px 0;
+  overflow: hidden;
+}
+
+.uredjaj-protiv-kamenca .kamenac-img-wrap {
+  overflow: hidden;
+}
+
+.uredjaj-protiv-kamenca .kamenac-img-wrap img {
+  width: 100%;
+  max-height: 520px;
+  object-fit: contain;
+  transition: transform 0.6s ease;
+}
+
+.uredjaj-protiv-kamenca .kamenac-img-wrap:hover img {
+  transform: scale(1.06);
+}
+
+.uredjaj-protiv-kamenca .kamenac-eyebrow {
+  display: inline-block;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.uredjaj-protiv-kamenca .kamenac-eyebrow:before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 2px;
+  background: var(--color-primary);
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.uredjaj-protiv-kamenca .kamenac-title {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.2;
+  color: var(--color-default);
+  margin-bottom: 22px;
+}
+
+.uredjaj-protiv-kamenca .kamenac-title em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .uredjaj-protiv-kamenca .kamenac-title {
+    font-size: 32px;
+  }
+}
+
+.uredjaj-protiv-kamenca p {
+  margin-bottom: 20px;
+  line-height: 1.7;
+}
+
+.uredjaj-protiv-kamenca ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 25px;
+}
+
+.uredjaj-protiv-kamenca ul li {
+  margin-bottom: 12px;
+  font-size: 15px;
+}
+
+.uredjaj-protiv-kamenca ul li i {
+  color: var(--color-primary);
+  margin-right: 8px;
+  font-size: 18px;
+  vertical-align: -2px;
 }
