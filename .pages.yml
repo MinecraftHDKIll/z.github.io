@@ -1,0 +1,41 @@
+media:
+  input: assets/img/projects/gallery
+  output: /assets/img/projects/gallery
+  rename: random
+  categories: [image]
+  extensions: [jpg, jpeg, png, webp, avif]
+
+content:
+  - name: gallery
+    label: Galerija
+    type: file
+    path: data/gallery.json
+    format: json
+    list: true
+    fields:
+      - name: title
+        label: Naslov
+        type: string
+        required: true
+      - name: description
+        label: Opis
+        type: text
+      - name: category
+        label: Kategorija
+        type: select
+        required: true
+        options:
+          values:
+            - Kotlovnice
+            - Klimatizacija
+            - Kupaonice
+            - Uređaj protiv kamenca
+            - Ostalo
+      - name: image
+        label: Fotografija
+        type: image
+        required: true
+        options:
+          path: assets/img/projects/gallery
+          extensions: [jpg, jpeg, png, webp, avif]
+          categories: [image]
